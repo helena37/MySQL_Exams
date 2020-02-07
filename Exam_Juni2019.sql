@@ -78,6 +78,18 @@ SELECT REVERSE(c.full_name) card_number_set,
 FROM clients c
 WHERE c.id BETWEEN 191 AND 200;
 
+#03.    Update
+
+UPDATE employees_clients ec
+JOIN (SELECT ec2.employee_id
+    FROM employees_clients ec2
+    GROUP BY ec2.employee_id
+    ORDER BY COUNT(ec2.client_id),
+             ec2.employee_id
+    LIMIT 1) AS result
+SET ec.employee_id = result.employee_id
+WHERE ec.employee_id = ec.client_id;
+
 #04.	Delete
 
 DELETE employees
